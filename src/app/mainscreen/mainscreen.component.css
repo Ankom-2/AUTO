@@ -1,0 +1,31 @@
+.cust {
+    margin-left: 8%;
+}
+
+a {
+    margin-left: 5rem;
+}
+
+.example-card {
+    max-width: 400px;
+    height: 150px;
+}
+
+.example-container {
+    /* height: 400px; */
+    width: 30rem;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+}
+
+@media (min-width: 576px) {
+    .jumbotron {
+        padding-top: none !important;
+        padding-right: none !important;
+        padding-bottom: none !important;
+        padding-left: none !important;
+    }
+}

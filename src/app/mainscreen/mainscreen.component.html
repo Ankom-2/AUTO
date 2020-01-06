@@ -1,0 +1,192 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Upload Data Sets</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="dataSets" class="text-info">Choose File to Upload</label>
+                <div class="input-group">
+                    <input type="file" (change)="onFileSelect($event)" />
+                </div>
+                <br>
+                <label for="fileName" class="text-dark">Enter file name</label>
+                <input type="text" class="form-control" formControlName="fileName" id="fileName" placeholder="Enter the file name" required>
+            </div>
+            <!--BUTTON FOR UPLOAD AND CANCLE-->
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-outline-success">Upload</button>
+                <button type="button" class="btn btn-outline-danger" (click)="modal.dismiss('cancel click')">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+</ng-template>
+<div class="jumbotron jumbotron-fluid" style="background-image: url('../assets/images.jpg');">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 offset-1">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>Click To Upload Data Sets</mat-card-title>
+                    </mat-card-header>
+                    <button class="btn btn-lg btn-info" (click)="open(content)">Upload Data Sets
+                    </button>
+                </mat-card>
+            </div>
+            <!--For Create experiment-->
+            <div class="col-sm-5 offset-1">
+                <mat-card class="example-card">
+                    <mat-card-title>Click To create Experiment</mat-card-title>
+                    <button class="btn btn-lg btn-info padd" (click)="open_Input()">Create Experiment</button>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <pre>{{closeResult}}</pre> -->
+<!--List previous of dataSets and Experiments-->
+<div>
+    <h2 class="text-center"><mark>List of previous data sets and experiments</mark></h2>
+</div>
+<br>
+<div class="row">
+    <div class="col-sm-4 offset-1">
+        <div *ngIf="loadTable">
+            <div class="example-container mat-elevation-z8">
+                <table mat-table [dataSource]="previousData" class="table-hover table-striped table-bordered text-center">
+
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="ID">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> ID </th>
+                        <td mat-cell *matCellDef="let element"> {{element.dataSet_ID}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="Name">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 offset-1">
+        <div *ngIf="loadExperiment">
+            <div class="example-container mat-elevation-z8">
+                <table mat-table [dataSource]="previousExperiment">
+
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="Experiment ID">
+                        <th mat-header-cell *matHeaderCellDef class="bg-dark text-light"> Experiment ID </th>
+                        <td mat-cell *matCellDef="let element"> {{element.exp_ID}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="Name">
+                        <th mat-header-cell *matHeaderCellDef class="bg-dark text-light"> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns_Exp; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns_Exp;"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<!--FOOTER-->
+<div>
+    <!-- Footer -->
+    <footer class="page-footer font-small indigo pt-4">
+
+        <!-- Footer Links -->
+        <div class="container-fluid text-center text-md-left">
+
+            <!-- Grid row -->
+            <div class="row">
+
+                <!-- Grid column -->
+                <div class="col-md-6 mt-md-0 mt-3">
+
+                    <!-- Content -->
+                    <h5 class="text-uppercase">Footer Content</h5>
+                    <p>Here you can use rows and columns to organize your footer content.</p>
+
+                </div>
+                <!-- Grid column -->
+
+                <hr class="clearfix w-100 d-md-none pb-3">
+
+                <!-- Grid column -->
+                <div class="col-md-3 mb-md-0 mb-3">
+
+                    <!-- Links -->
+                    <h5 class="text-uppercase">Links</h5>
+
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="#!">Link 1</a>
+                        </li>
+                        <li>
+                            <a href="#!">Link 2</a>
+                        </li>
+                        <li>
+                            <a href="#!">Link 3</a>
+                        </li>
+                        <li>
+                            <a href="#!">Link 4</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-3 mb-md-0 mb-3">
+
+                    <!-- Links -->
+                    <h5 class="text-uppercase">Links</h5>
+
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="#!">Link 1</a>
+                        </li>
+                        <li>
+                            <a href="#!">Link 2</a>
+                        </li>
+                        <li>
+                            <a href="#!">Link 3</a>
+                        </li>
+                        <li>
+                            <a href="#!">Link 4</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+        </div>
+        <!-- Footer Links -->
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2019 Copyright:
+            <a href="#"> AUTOML</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+</div>
+
+<!--ADDING ROUTER OUTLET-->

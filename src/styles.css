@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+/* @import './app/dashboard/custom-theme.scss'; */
+
+html,
+body {
+    width: 100%;
+    float: left;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
