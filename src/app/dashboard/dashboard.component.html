@@ -1,24 +1,170 @@
-<div class="grid-container dash">
-    <h1 class="mat-h1">Dashboard</h1>
-    <mat-grid-list cols="2" rowHeight="350px">
-        <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-            <mat-card class="dashboard-card">
+<body>
+    <div class="container-fluid custom">
+        <div class="row">
+            <mat-card class="card-style custom_colors">
                 <mat-card-header>
                     <mat-card-title>
-                        {{card.title}}
-                        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-                        <mat-menu #menu="matMenu" xPosition="before">
-                            <button mat-menu-item>Expand</button>
-                            <button mat-menu-item>Remove</button>
-                        </mat-menu>
+                        <h1><strong>Dashboard</strong></h1>
                     </mat-card-title>
                 </mat-card-header>
-                <mat-card-content class="dashboard-card-content">
-                    <div>Card Content Here</div>
+                <mat-card-content>
+                    <!--ADDING CARDS FOR DATAS-->
+                    <hr>
+                    <div class="row card_hover">
+                        <div class="col-md-3 ">
+                            <div class="box card card_design1">
+                                <div class="card-title">
+                                    <h4><strong>Experiment Name:</strong></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ">
+                            <div class="box card card_design2 ">
+                                <div class="card-title">
+                                    <h4><strong> Data Set Name:</strong></h4>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ">
+                            <div class="box card card_design3">
+                                <div class="card-title">
+                                    <h4><strong>Model Type:</strong></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="box card card_design4">
+                                <div class="card-title">
+                                    <h4><strong>Scoring Type:</strong></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="card">
+                        <table class="table table-bordered table-striped">
+                            <thead class="black white-text">
+                                <tr>
+                                    <td>Model No.</td>
+                                    <td>Auto ML Name</td>
+                                    <td>Model Name</td>
+                                    <td>Status</td>
+                                    <td>Score(ordered)</td>
+                                    <td>Model Artifacts</td>
+                                </tr>
+                            </thead>
+                            <tr *ngFor="let data of dashboard; let i=index">
+                                <td>{{i}}</td>
+                                <td>{{data.auto_ml_name}}</td>
+                                <td>{{data.target}}</td>
+                                <td>{{data.status}}</td>
+                                <td>{{data.score}}</td>
+                                <td>{{data.input_file_path}}</td>
+                            </tr>
+                        </table>
+                    </div>
                 </mat-card-content>
             </mat-card>
-        </mat-grid-tile>
-    </mat-grid-list>
-</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="scatter-style">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>
+                                Scatter Plot
+                                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu" xPosition="before">
+                                    <button mat-menu-item>Expand</button>
+                                    <button mat-menu-item>Remove</button>
+                                </mat-menu>
+                            </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="dashboard-card-content">
+                            <div>
+                                <app-scatter></app-scatter>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="scatter-style">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>
+                                Confusion Matrix
+                                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu" xPosition="before">
+                                    <button mat-menu-item>Expand</button>
+                                    <button mat-menu-item>Remove</button>
+                                </mat-menu>
+                            </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="dashboard-card-content">
+                            <div>
+                                <app-scatter></app-scatter>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="scatter-style">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>
+                                Bar Chart
+                                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu" xPosition="before">
+                                    <button mat-menu-item>Expand</button>
+                                    <button mat-menu-item>Remove</button>
+                                </mat-menu>
+                            </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="dashboard-card-content">
+                            <div>
+                                <app-bar></app-bar>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="scatter-style">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>
+                                Scatter Plot
+                                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu" xPosition="before">
+                                    <button mat-menu-item>Expand</button>
+                                    <button mat-menu-item>Remove</button>
+                                </mat-menu>
+                            </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="dashboard-card-content">
+                            <div>
+                                <app-scatter></app-scatter>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -18,9 +18,9 @@
                     </div>
                     <div class="form-group">
                         <label for="pType" class="">Problem Type<span class="text-danger">*</span>&nbsp;:</label>
-                        <label class="radio-inline">&nbsp;<input type="radio" formControlName="pType"
-                                value="classification" (change)="onItemChange($event)">Classification</label> &nbsp;
-                        <label class="radio-inline"><input type="radio" formControlName="pType" value="regression"
+                        <label class="radio-inline">&nbsp;<input type="radio" formControlName="problemType" value=1
+                                (change)="onItemChange($event)">Classification</label> &nbsp;
+                        <label class="radio-inline"><input type="radio" formControlName="problemType" value=2
                                 (change)="onItemChange($event)">Regression</label>
 
                         <!-- <p *ngIf="registerForm.controls.problemType.touched &&registerForm.controls.problemType.errors"
@@ -34,28 +34,31 @@
                                 class="alert alert-danger">This field is
                                 required!</p> -->
                     </div>
-                    <div class="form-group">
-                        <label for="dsName" class="">Data Set Name(out of available options)<span
-                                class="text-danger">*</span>&nbsp;:</label>
-                        <select class="form-control" formControlName="dsName">
-                            <option disabled selected value="">Select the data set</option>
-                            <option value="one">ONE</option>
-                        </select>
-                        <!-- <p *ngIf="registerForm.controls.problemType.touched &&registerForm.controls.dsName.errors"
+                    <form [formGroup]="dataSet">
+                        <div class="form-group">
+                            <label for="dsName" class="">Data Set Name(out of available options)<span
+                                    class="text-danger">*</span>&nbsp;:</label>
+                            <select class="form-control" formControlName="dataId">
+                                <option disabled selected value="">Select the data set</option>
+                                <option *ngFor="let j of data_name" value={{j.id}}>{{j.name}}</option>
+                            </select>
+                            <!-- <p *ngIf="registerForm.controls.problemType.touched &&registerForm.controls.dsName.errors"
                                 class="alert alert-danger">This field is
-                                required!</p> -->
-                    </div>
+                                    required!</p> -->
+                        </div>
+
+                    </form>
                     <!--SPLIT RATIO-->
                     <div class="form-group">
                         <label class="">Split ratio<span class="text-danger">*</span>&nbsp;:</label>
                         <div class="form-row">
                             <div class="col">
                                 <label>Train %</label>
-                                <input type="number" class="form-control" placeholder="TRAIN" (keyup)="onChange($event)" formControlName="train" />
+                                <input type="number" class="form-control" placeholder="TRAIN" (keyup)="onChange($event)" formControlName="splitTrain" />
                             </div>
                             <div class="col">
                                 <label>Test %</label>
-                                <input type="text" class="form-control" placeholder="TEST" [(ngModel)]="tes" disabled formControlName="test" />
+                                <input type="text" class="form-control" placeholder="TEST" [(ngModel)]="tes" disabled formControlName="splitTest" />
                             </div>
                             <!-- <p *ngIf="registerForm.controls.problemType.touched &&registerForm.controls.spRatio.errors"
                                 class="alert alert-danger">This field is
@@ -67,19 +70,19 @@
                         <label for="score" class="">Score<span class="text-danger">*</span>&nbsp;:</label>
                         <!--Classification-->
                         <div *ngIf="classi">
-                            <label class="radio-inline">&nbsp;<input type="radio" formControlName="score"
-                                    value="accuracy" checked>Accuracy</label> &nbsp;
-                            <label class="radio-inline"><input type="radio" formControlName="score"
-                                    value="precision">Precision</label> &nbsp;
-                            <label class="radio-inline"><input type="radio" formControlName="score"
-                                    value="recall">Recall</label> &nbsp;
-                            <label class="radio-inline"><input type="radio" formControlName="score" value="f1Score">F1
+                            <label class="radio-inline">&nbsp;<input type="radio" formControlName="scoreType" value="1"
+                                    checked>Accuracy</label> &nbsp;
+                            <label class="radio-inline"><input type="radio" formControlName="scoreType"
+                                    value="2">Precision</label> &nbsp;
+                            <label class="radio-inline"><input type="radio" formControlName="scoreType"
+                                    value="3">Recall</label> &nbsp;
+                            <label class="radio-inline"><input type="radio" formControlName="scoreType" value="4">F1
                                 Score</label>
                         </div>
                         <!--Regression-->
                         <div *ngIf="reg">
-                            <label class="radio-inline">&nbsp;<input type="radio" formControlName="score"
-                                    value="rmse">RMSE</label> &nbsp;
+                            <label class="radio-inline">&nbsp;<input type="radio" formControlName="scoreType"
+                                    value="5">RMSE</label> &nbsp;
                         </div>
                         <!-- <p *ngIf="registerForm.controls.problemType.touched &&registerForm.controls.score.errors"
                                 class="alert alert-danger">This field is required!
@@ -87,7 +90,7 @@
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-block btn-lg btn-info">Run Exp</button>
-                        <p *ngIf="submitted" class="alert alert-success">Form Successfully submitted {{data}}</p>
+                        <p *ngIf="successMessage!=null" class="alert alert-success">{{successMessage}}</p>
                     </div>
                 </form>
             </div>

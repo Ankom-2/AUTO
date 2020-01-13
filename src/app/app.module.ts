@@ -29,12 +29,16 @@ import { InputscreenComponent } from './inputscreen/inputscreen.component';
 import { FormServiceService } from '../form-service.service';
 import { MatTableModule, MatSortModule, MatProgressSpinnerModule } from '@angular/material';
 import { MainscreenComponent } from './mainscreen/mainscreen.component';
+import { ScatterComponent } from './scatter/scatter.component';
+import { BarComponent } from './bar/bar.component';
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     InputscreenComponent,
     MainscreenComponent,
+    ScatterComponent,
+    BarComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +60,7 @@ import { MainscreenComponent } from './mainscreen/mainscreen.component';
     MatTooltipModule,
     MatSidenavModule, MatTableModule, MatSortModule, MatProgressSpinnerModule
   ],
+  entryComponents:[ScatterComponent],
   providers: [FormServiceService],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,55 @@
+body {
+    font-family: "Helvetica Neue";
+    color: #686765;
+}
+
+.d3-chart {
+    height: 376px;
+    width: 499px;
+}
+
+.name {
+    float: right;
+    color: #27aae1;
+}
+
+.axis {
+    fill: none;
+    stroke: #AAA;
+    stroke-width: 1px;
+}
+
+text {
+    stroke: none;
+    fill: #666666;
+    font-size: .6em;
+    font-family: "Helvetica Neue"
+}
+
+.label {
+    fill: #414241;
+}
+
+.node {
+    cursor: pointer;
+}
+
+.dot {
+    opacity: .7;
+    cursor: pointer;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    opacity: 0.2;
+}

@@ -9,3 +9,18 @@ a {
 .mat-button {
     font-size: 16px !important;
 }
+
+.mat-button:hover {
+    background-color: white !important;
+}
+
+.logo {
+    display: inline-block;
+    vertical-align: top;
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+    background-color: whitesmoke;
+    /* margin-top: 1rem; */
+    /* if you want it vertically middle of the navbar. */
+}

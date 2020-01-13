@@ -3,6 +3,8 @@ import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 import { transition } from '@angular/animations';
+import { FormServiceService } from '../../form-service.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-inputscreen',
   templateUrl: './inputscreen.component.html',
@@ -22,75 +24,65 @@ export class InputscreenComponent implements OnInit {
   classi: boolean = false;
   reg: boolean = false;
   trai: number = 80;
-  tes:number = 20;
-  // val:number;
-  //LIST FormData
-  // previousData = [
-  //   { dataSet_ID: 1001, Name: "Data_Set_1" },
-  //   { dataSet_ID: 1002, Name: "Data_Set_2" },
-  //   { dataSet_ID: 1003, Name: "Data_Set_3" },
-  //   { dataSet_ID: 1009, Name: "Data_Set_N" }
-  // ];
-  // previousExperiment = [
-  //   { exp_ID: 1001, Name: "Experiment_Name_1" },
-  //   { exp_ID: 1002, Name: "Experiment_Name_2" },
-  //   { exp_ID: 1003, Name: "Experiment_Name_3" },
-  //   { exp_ID: 1009, Name: "Experiment_Name_N" }
-  // ];
-
+  tes: number = 20;
+  errorMessage: any;
+  successMessage: any;
+  dataSet: any;
+  subscription: Subscription;
+  data_setArr:any;
+  // data_Id: number[]=[];
+  data_name:object[]=[];
   constructor(
     private modalService: NgbModal,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private formService: FormServiceService,
   ) { }
   ngOnInit() {
+    //Subscribing to formService for DATA_ID and DATA_NAME.
+    // this.subscription =  this.formService.getURIData().subscribe(res => {console.log("RESPONSE FOR URI",res)});
+    this.formService.getDataSet().subscribe(res => {this.data_setArr = res,console.log("Response data",this.data_setArr),this.addNameId()});
+    this.dataSet = this.formBuilder.group({ dataId: ["", Validators.required] });
     this.registerForm = this.formBuilder.group({
-      expName:["",Validators.required],
-      pType: ["", Validators.required],
+      expName: ["", Validators.required],
+      problemType: ["", Validators.required],
       target: ["", Validators.required],
-      dsName: ["", Validators.required],
-      train: [this.trai, Validators.required],
-      test: [this.tes, Validators.required],
-      score: ["", Validators.required]
+
+      dataSet: this.dataSet,
+      splitTrain: [this.trai, Validators.required],
+      splitTest: [this.tes, Validators.required],
+      scoreType: ["", Validators.required]
     });
+
+    //Adding data id and name to array fro drop_down:
     this.loadTable = true;
     this.loadExperiment = true;
   }
-    onChange(event:any){
-      this.trai = event.target.value;
-      this.tes = 100-this.trai;
-      console.log(this.trai, this.tes)
-    }
-  
-  // open(content) {
-  //   this.modalService
-  //     .open(content, { ariaLabelledBy: "modal-basic-title" })
-  //     .result.then(
-  //       result => {
-  //         this.closeResult = `Closed with: ${result}`;
-  //       },
-  //       reason => {
-  //         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //       }
-  //     );
+  // ngOnDestroy() {
+  //   // unsubscribe to ensure no memory leaks
+  //   this.subscription.unsubscribe();
   // }
-  // onFileSelect(event) {
-  //   if (event.target.files.length > 0) {
-  //     const file = event.target.files[0];
-  //     console.log(event.target.files[0]);
-  //     this.uploadForm.get("profile").setValue(file);
-  //   }
-  // }
+  addNameId(){
+    this.data_setArr.forEach((obj) => {
+      this.data_name.push({"id":obj.dataId,"name":obj.dataName})
+    });
+    // console.log("DATA DAATA",this.data_name);
+  }
+  onChange(event: any) {
+    this.trai = event.target.value;
+    this.tes = 100 - this.trai;
+    console.log(this.trai, this.tes)
+  }
+
   //On submitting setting file to server.
   onSubmit(e) {
+    this.errorMessage = null;
+    this.successMessage = null;
     // const formData = new FormData();
-    // formData.append("file", this.uploadForm.get("profile").value);
-    // this.httpClient
-    //   .post<any>(this.SERVER_URL, formData)
-    //   .subscribe(res => console.log(res), err => console.log(err));
+    
+    console.log("FORMDATAATA", this.registerForm.value);
+    //Making service call for uploading data.
+    this.formService.postFormData(this.registerForm.value).subscribe(res => { this.successMessage = "Data Uploaded Successfully", console.log("Good response:", res) }, err => { this.errorMessage = "Upload Failed", console.log("Error response:", err) })
     // close();
-    this.submitted = true;
-    this.data = JSON.stringify(this.registerForm.value);
-    e.preventDefault();
   }
 
   private getDismissReason(reason: any): string {
@@ -104,7 +96,7 @@ export class InputscreenComponent implements OnInit {
   }
   onItemChange(event) {
     console.log(event.target.value);
-    if (event.target.value == "classification") {
+    if (event.target.value == 1) {
       this.classi = true;
       this.reg = false;
       console.log(this.classi);
@@ -114,5 +106,6 @@ export class InputscreenComponent implements OnInit {
       console.log(this.classi);
     }
   }
+
 
 }
